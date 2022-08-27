@@ -1,4 +1,4 @@
-# meta developer: @kkfesbotfaq
+# meta developer: @shuriq_santiago
 
 from .. import loader, utils
 import asyncio, pytz, re, telethon
@@ -16,6 +16,70 @@ class NumMod(loader.Module):
 			self.db.set("NumMod", "exUsers", [])
 		if not self.db.get("NumMod", "infList", False):
 			self.db.set("NumMod", "infList", {})
+
+	async def coniyacmd(self, message):
+		".num [arg] [arg] [arg]....\nВ качестве аргументов используй числа. или первые символы строки."
+		reply = await message.get_reply_message()
+		a = reply.text
+		exlist = self.db.get("NumMod", "exUsers")
+		count_st = 0
+		count_hf = 0
+		if not reply:
+			await message.edit('Нет реплая.')
+			return
+		args = utils.get_args_raw(message)
+		list_args = []
+		if not args:
+			await message.edit('Нет аргументов')
+			return
+		for i in args.split(' '):
+			if '-' in i:
+				ot_do = i.split('-')
+				try:
+					for x in range(int(ot_do[0]), int(ot_do[1]) + 1):
+						list_args.append(str(x))
+				except:
+					await message.respond('Используй правильно функцию "от-до"')
+					return
+			else:
+				list_args.append(i)
+		lis = a.splitlines()
+		for start in list_args:
+			for x in lis:
+				if x.lower().startswith(str(start.lower())):
+					count_st = 1
+					if 'href="' in x:
+						count_hf = 1
+						b = x.find('href="') + 6
+						c = x.find('">')
+						link = x[b:c]
+						if link.startswith('tg'):
+							list = '@' + link.split('=')[1]
+							if list in exlist:
+								await message.reply(f'Исключение: <code>{list}</code>')
+							else:
+								await message.reply(f'соня бей {list}')
+							break
+						elif link.startswith('https://t.me'):
+							a = '@' + str(link.split('/')[3])
+							if a in exlist:
+								await message.reply(f'Исключение: <code>{a}</code>')
+							else:
+								await message.reply(f'соня бей {a}')
+							break
+						else:
+							await message.reply('что за хуета?')
+							break
+			await asyncio.sleep(3)
+
+		if not count_st:
+			await message.edit('Не найдено ни одного совпадения в начале строк с аргументами.')
+
+		elif not count_hf:
+			await message.edit('Не найдено ни одной ссылки.')
+
+		elif len(list_args) >= 3:
+			await message.respond('<b>Заражения успешно завершены.</b>')
 		
 	async def numcmd(self, message):
 		".num [arg] [arg] [arg]....\nВ качестве аргументов используй числа. или первые символы строки."
