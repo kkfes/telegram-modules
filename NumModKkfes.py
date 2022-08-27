@@ -18,7 +18,7 @@ class NumMod(loader.Module):
 			self.db.set("NumMod", "infList", {})
 
 	async def coniyacmd(self, message):
-		".num [arg] [arg] [arg]....\nВ качестве аргументов используй числа. или первые символы строки."
+		".coniya [arg] [arg] [arg]....\nВ качестве аргументов используй числа. или первые символы строки."
 		reply = await message.get_reply_message()
 		a = reply.text
 		exlist = self.db.get("NumMod", "exUsers")
