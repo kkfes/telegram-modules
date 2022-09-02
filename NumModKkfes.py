@@ -1,4 +1,4 @@
-# meta developer: @shuriq_santiago
+# meta developer: @kkfes
 
 from .. import loader, utils
 import asyncio, pytz, re, telethon
