@@ -34,7 +34,7 @@ class SpamMod(loader.Module):
                 return
         count = 0
         spam = (await message.get_reply_message()) if use_reply else message
-        spam.message = " ".join(args[0:])
+        spam.message = " ".join(args[0])
         try:
             count = int(count)
         except ValueError:
