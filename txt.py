@@ -32,7 +32,7 @@ class SpamMod(loader.Module):
             else:
                 await utils.answer(message, self.strings("nice_number", message))
                 return
-        count = 0
+        count = "0"
         spam = (await message.get_reply_message()) if use_reply else message
         spam.message = " ".join(args[0])
         try:
