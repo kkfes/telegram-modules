@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 @loader.tds
 class TxtMod(loader.Module):
-    """Annoys people really effectively"""
+    """Managing a second account is easy and simple"""
 
     strings = {
         "name": "Txt",
