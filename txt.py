@@ -7,7 +7,6 @@ import asyncio
 
 logger = logging.getLogger(__name__)
 
-
 @loader.tds
 class TxtMod(loader.Module):
     """Managing a second account is easy and simple"""
