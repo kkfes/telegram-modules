@@ -26,13 +26,9 @@ class TxtMod(loader.Module):
         if len(args) == 0:
             await utils.answer(message, self.strings("need_txt", message))
             return
-        if len(args) == 1:
-            if message.is_reply:
-                use_reply = True
-            else:
-                await utils.answer(message, self.strings("nice_number", message))
-                return
+        if message.is_reply:
+            use_reply = True
         txtq = (await message.get_reply_message()) if use_reply else message
-        txtq.message = " ".join(args[0])
+        txtq.message = " ".join(args[0:])
 
-        await utils.answer(message, self.strings("much_spam", txtq))
+        await utils.answer(message, txtq.message)
