@@ -281,7 +281,7 @@ class NumMod(loader.Module):
 							send_mes = re.search(r"мин|-", text)
 							if send_mes: await message.respond('.заразить слабее')
 							else:
-								send_mes = re.search(r"плюс|+", text)
+								send_mes = re.search(r"плюс", text)
 								if send_mes: await message.respond('заразить +')
 								else:
 									send_mes = re.search(r"бол|болезни", text)
