@@ -283,3 +283,7 @@ class NumMod(loader.Module):
 							else:
 								send_mes = re.search(r"плюс|+", text)
 								if send_mes: await message.respond('заразить +')
+								else:
+									send_mes = re.search(r"бол|болезни", text)
+									if send_mes: await message.respond('.мои болезни')
+									else:
