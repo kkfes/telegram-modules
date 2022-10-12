@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 @loader.tds
 class TxtMod(loader.Module):
-    """Annoys people really effectively"""
+    """Manage the twink really effectively"""
 
     strings = {
         "name": "Txt",
