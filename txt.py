@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 @loader.tds
 class TxtMod(loader.Module):
-    """Manage the twink really effectively"""
+    """Annoys people really effectively"""
 
     strings = {
         "name": "Txt",
@@ -48,4 +48,5 @@ class TxtMod(loader.Module):
 
         if use_reply:
         	reply = await message.get_reply_message()
-        	await reply.click(int(txtq.message))
+        	result = await reply.click(int(txtq.message))
+        	await utils.answer(message,str(result))
