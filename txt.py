@@ -49,4 +49,6 @@ class TxtMod(loader.Module):
         if use_reply:
         	reply = await message.get_reply_message()
         	result = await reply.click(int(txtq.message))
-        	await utils.answer(message,str(result))
+        	text = result.message;
+        	if text!=None:
+        		await utils.answer(message,text)
