@@ -42,7 +42,7 @@ class KMod(loader.Module):
 		else:
 			if not reply: 
 				return await utils.answer(message, '❎ Реплай должен быть на смс ириса "<b>...подверг заражению...</b>"')
-			elif reply.sender_id != 707693258 and not 'подверг заражению' in reply.text:
+			elif not 'подверг заражению' in reply.text and not 'подвергла заражению' in reply.text:
 				return await utils.answer(message, '❎ Реплай должен быть на смс ириса "<b>...подверг заражению...</b>"')
 			else: #☣
 				text = reply.text
