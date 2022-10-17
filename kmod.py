@@ -111,10 +111,12 @@ class KMod(loader.Module):
 				if user!=None:
 					num = float(user[0])
 					idx1 = messag[i].index("|")
-					idx2 = messag[i].index("|",idx1+1)
+					idx2 = messag[i].rindex("|")
 					give = messag[i][idx1+1:idx2-6]
 					t = str(give)
 					t = t.replace(",", "." )
+					while "|" in t:
+						t=t[t.index("|")+1:(len(t)-1)]
 					num1 = 0
 					if t.endswith('k'):
 						tn = float(t[0:(len(t)-1)])
