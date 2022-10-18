@@ -138,13 +138,58 @@ class KMod(loader.Module):
 			i=i+1
 		return await utils.answer(message,txt)
 
+	async def zarupdatecmd(self, message):
+		"Ответом на мои жертвы (обновит информацию о жертве)"
+		infList = self.db.get("KMod", "infList")
+		reply = await message.get_reply_message()
+		txt = '<b>🖋 Вот все добавленные жертвы:</b>\n'
+		timezone = "Europe/Kiev"
+		time = datetime.now(pytz.timezone(timezone)).strftime("%d.%m")
+		messag = reply.message.split('\n')
+		i = 1
+		for value in reply.entities:
+			if 'tg://openmessage?user_id=' in value.url:
+				try:
+					text = '@'+value.url.split("=")[1]
+					user = None
+					try:
+						user = infList[text]
+					except:
+						user = None
+					if user!=None:
+						num = float(user[0])
+						idx1 = messag[i].index("|")
+						idx2 = messag[i].rindex("|")
+						give = messag[i][idx1+1:idx2]
+						t = str(give)
+						t = t.replace(",", "." )
+						t = t.replace("+", "" )
+						t = t.strip()
+						while "|" in t:
+							t=t[t.index("|")+1:(len(t)-1)]
+						num1 = 0
+						if 'k' in t:
+							tn = float(t[0:(len(t)-1)])
+							tn=tn*1000
+							t=str(tn)
+						num1 = float(t)
+						user, count = str(text), float(num1)
+						infList[user] = [str(count), time]
+						self.db.set("KMod", "infList", infList)
+						txt+=str(i)+'. '+text+' - ➖ <code>'+str(num1)+'</code>\n'
+				except Exception as e:
+					txt+=str(i)+' '+str(e)+'\n'
+			i=i+1
+
+		return await utils.answer(message,txt)
+
 	async def zarfiltercmd(self, message):
 		"""  {args1} {args2 OR reply} \nВызови команду, чтобы просмотреть аргументы."""
 		args = utils.get_args_raw(message)
 		reply = await message.get_reply_message()
 		filter_and_users = self.db.get("KMod", "numfilter", {'users': [], 'filter': None, 'status': False})
 		if not args:
-			return await utils.answer(message, f"➕ <code>add</code> --- добавить|удалить юзеров(не больше 10), на которых будет триггериться фильтр(ид|реплай).\n[{', '.join(list('<code>' + i + '</code>' for i in filter_and_users['users']))}]\n❔ <code>pref</code> --- установить фильтр. Допустим один.\n<code>{filter_and_users['filter'] if filter_and_users['filter'] else '❌Не установлен.'}</code>\n<code>start</code> --- запустить|остановить.\n<b>{'✅ Статус: Запущен' if filter_and_users['status'] else '❌ Статус: Остановлен'}.</b>\n\n📝 Работает так:\n[фильтр] чек @id - проверка жертвы\n[фильтр] чеклист - проверка списка биотоп/биотоп чата/биотоп корп\n[фильтр] доб @id ресы (без К) * добавит пользователя в зарлист")
+			return await utils.answer(message, f"➕ <code>add</code> --- добавить|удалить юзеров(не больше 10), на которых будет триггериться фильтр(ид|реплай).\n[{', '.join(list('<code>' + i + '</code>' for i in filter_and_users['users']))}]\n❔ <code>pref</code> --- установить фильтр. Допустим один.\n<code>{filter_and_users['filter'] if filter_and_users['filter'] else '❌Не установлен.'}</code>\n<code>start</code> --- запустить|остановить.\n<b>{'✅ Статус: Запущен' if filter_and_users['status'] else '❌ Статус: Остановлен'}.</b>\n\n📝 Работает так:\n[фильтр] чек @id - проверка жертвы\n[фильтр] чеклист/[фильтр] зарчек/[фильтр] листчек - проверка списка биотоп/биотоп чата/биотоп корп\n[фильтр] доб @id ресы (без К) - добавит пользователя в зарлист")
 		args = args.split(' ', maxsplit=1)
 		if len(args) == 1 and not reply and args[0] != 'start':
 			return await utils.answer(message, '❌ Нет 2 аргумента и реплая.')
@@ -212,7 +257,7 @@ class KMod(loader.Module):
 					await message.respond("❎ Данного пользователя нет в списке.")
 			else:
 				await message.respond("❎ Укажите ид вместе с @")
-		elif key=='листчек':
+		elif key=='листчек' or key=='зарчек' or key=='чеклист':
 			infList = self.db.get("KMod", "infList")
 			reply = await message.get_reply_message()
 			txt = '<b>👮 Вот все провереные жертвы:</b>\n'
