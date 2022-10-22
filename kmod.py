@@ -30,13 +30,20 @@ class KMod(loader.Module):
 			except:
 				await utils.answer(message, "❎ Данные были введены не корректно")
 				return
-
+			us = None
+			try:
+				us = infList[args_list[0]]
+			except:
+				us = None
+			addtxt = ''
+			if us!=None:
+				addtxt='<s>'+us[0]+'</s> -'
 			infList[user] = [str(count), time]
 			self.db.set("KMod", "infList", infList)
 			await utils.answer(
 				message,
 				f"✅ Пользователь <code>{args_list[0]}</code> добавлен в список заражений!\n"
-				f"ℹ️ Число: <code>{count}</code>\n"
+				f"ℹ️ Число: {addtxt}<code>{count}</code>\n"
 				f"📅 Дата: <b>{time}</b>"
 			)
 		else:
@@ -56,9 +63,17 @@ class KMod(loader.Module):
 					t=str(tn)
 				x = text.index('user?id=') + 8
 				user = '@' + text[x:].split('"', maxsplit=1)[0]
+				us = None
+				try:
+					us = infList[args_list[0]]
+				except:
+					us = None
+				addtxt = ''
+				if us!=None:
+					addtxt='<s>'+us[0]+'</s> -'
 				infList[user] = [t, time]
 				self.db.set("KMod", "infList", infList)
-				await utils.answer(message, f"✅ Пользователь <code>{user}</code> добавлен в список заражений.\nℹ️ Число: <code>{count}</code>\n📅 Дата: <b>{time}</b>")
+				await utils.answer(message, f"✅ Пользователь <code>{user}</code> добавлен в список заражений.\nℹ️ Число: {addtxt}<code>{count}</code>\n📅 Дата: <b>{time}</b>")
 
 
 	async def zarlistcmd(self, message):
@@ -174,9 +189,17 @@ class KMod(loader.Module):
 							t=str(tn)
 						num1 = float(t)
 						user, count = str(text), float(num1)
+						us = None
+						try:
+							us = infList[args_list[0]]
+						except:
+							us = None
+						addtxt = ''
+						if us!=None:
+							addtxt='<s>'+us[0]+'</s> -'
 						infList[user] = [str(count), time]
 						self.db.set("KMod", "infList", infList)
-						txt+=str(i)+'. '+text+' - ➖ <code>'+str(num1)+'</code>\n'
+						txt+=str(i)+'. '+text+' - '+addtxt+'<code>'+str(num1)+'</code>\n'
 				except Exception as e:
 					txt+=str(i)+' '+str(e)+'\n'
 			i=i+1
