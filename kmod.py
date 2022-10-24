@@ -65,7 +65,7 @@ class KMod(loader.Module):
 				user = '@' + text[x:].split('"', maxsplit=1)[0]
 				us = None
 				try:
-					us = infList[args_list[0]]
+					us = infList[user]
 				except:
 					us = None
 				addtxt = ''
@@ -191,7 +191,7 @@ class KMod(loader.Module):
 						user, count = str(text), float(num1)
 						us = None
 						try:
-							us = infList[args_list[0]]
+							us = infList[text]
 						except:
 							us = None
 						addtxt = ''
