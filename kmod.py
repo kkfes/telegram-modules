@@ -112,7 +112,7 @@ class KMod(loader.Module):
 		"Ответом на биотоп/биотоп чата/биотоп корп"
 		infList = self.db.get("KMod", "infList")
 		reply = await message.get_reply_message()
-		txt = '<b>👮 Вот все провереные жертвы:</b>\n'
+		txt = '<b><emoji document_id=6327738732665374492>🚨</emoji> Вот все провереные жертвы:</b>\n'
 		messag = reply.message.split('\n')
 		i = 1
 		for value in reply.entities:	
@@ -174,7 +174,7 @@ class KMod(loader.Module):
 					if user!=None:
 						num = float(user[0])
 						idx1 = messag[i].index("|")
-						idx2 = messag[i].rindex("|")
+						idx2 = messag[i].rindex("|")-1
 						give = messag[i][idx1+1:idx2]
 						t = str(give)
 						t = t.replace(",", "." )
