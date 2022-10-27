@@ -53,7 +53,7 @@ class TxtMod(loader.Module):
         	if text!=None:
         		await utils.answer(message,text)
         
-        async def pingcmd(self, message):
+    async def pingcmd(self, message):
         """Test your userbot ping"""
         start = time.perf_counter_ns()
         message = await utils.answer(message, "<code>🐻 Nofin...</code>")
