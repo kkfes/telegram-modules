@@ -174,14 +174,14 @@ class KMod(loader.Module):
 					if user!=None:
 						num = float(user[0])
 						idx1 = messag[i].index("|")
-						idx2 = messag[i].rindex("|")-1
+						idx2 = messag[i].rindex("|")
 						give = messag[i][idx1+1:idx2]
 						t = str(give)
 						t = t.replace(",", "." )
 						t = t.replace("+", "" )
 						t = t.strip()
 						while "|" in t:
-							t=t[t.index("|")+1:(len(t)-1)]
+							t=t[t.index("|")+1:len(t)]
 						num1 = 0
 						if 'k' in t:
 							tn = float(t[0:(len(t)-1)])
