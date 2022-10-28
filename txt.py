@@ -29,7 +29,9 @@ class TxtMod(loader.Module):
             await utils.answer(message, self.strings("need_txt", message))
             return
         txtq = (await message.get_reply_message()) if not use_reply else message
-        txtq.message = " ".join(args[0:])
+        
+        if use_reply:
+            txtq.message = " ".join(args[0:])
 
         await utils.answer(message, txtq.message)
 
@@ -51,5 +53,5 @@ class TxtMod(loader.Module):
             result = await reply.click(int(txtq.message))
             text = result.message
             if text!=None:
-                txt = '<emoji document_id=5780510893578129365>💬</emoji> Answer: '+text
+                txt = '<b><emoji document_id=5780510893578129365>💬</emoji> Answer:</b> '+text
                 await utils.answer(message,txt)
