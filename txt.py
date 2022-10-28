@@ -14,20 +14,20 @@ class TxtMod(loader.Module):
 
     strings = {
         "name": "Txt",
-        "need_txt": "<b>U wot? I need something to send?</b>",
+        "need_txt": "<b><emoji document_id=5215273032553078755>❎</emoji> U wot? I need something to send?</b>",
         "txt_urself": "<b>Go send urself.</b>"
     }
 
     async def txtcmd(self, message):
         """.txt <message>"""
-        use_reply = False
+        use_reply = True
         args = utils.get_args(message)
         logger.debug(args)
-        if len(args) == 0:
+        if message.is_reply:
+            use_reply = False
+        if len(args) == 0 and use_reply:
             await utils.answer(message, self.strings("need_txt", message))
             return
-        if message.is_reply:
-            use_reply = True
         txtq = (await message.get_reply_message()) if use_reply else message
         txtq.message = " ".join(args[0:])
 
@@ -51,5 +51,6 @@ class TxtMod(loader.Module):
         	result = await reply.click(int(txtq.message))
         	text = result.message;
         	if text!=None:
-        		await utils.answer(message,text)
+                txt = '<emoji document_id=5780510893578129365>💬</emoji> Answer:'+text
+        		await utils.answer(message,txt)
         
