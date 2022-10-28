@@ -52,5 +52,4 @@ class TxtMod(loader.Module):
         	text = result.message;
         	if text!=None:
                 txt = '<emoji document_id=5780510893578129365>💬</emoji> Answer:'+text
-        		await utils.answer(message,txt)
-        
+                await utils.answer(message,txt)
