@@ -47,9 +47,9 @@ class TxtMod(loader.Module):
         txtq.message = " ".join(args[0:])
 
         if use_reply:
-        	reply = await message.get_reply_message()
-        	result = await reply.click(int(txtq.message))
-        	text = result.message;
-        	if text!=None:
-                txt = '<emoji document_id=5780510893578129365>💬</emoji> Answer:'+text
+            reply = await message.get_reply_message()
+            result = await reply.click(int(txtq.message))
+            text = result.message
+            if text!=None:
+                txt = '<emoji document_id=5780510893578129365>💬</emoji> Answer: '+text
                 await utils.answer(message,txt)
