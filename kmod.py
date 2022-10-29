@@ -11,6 +11,7 @@ class KMod(loader.Module):
 	strings={"name": "KMod"}
 	
 	async def client_ready(self, client, db):
+		self._me = await self._client.get_me()
 		self.db = db
 		if not self.db.get("KMod", "infList", False):
 			self.db.set("KMod", "infList", {})
@@ -43,7 +44,7 @@ class KMod(loader.Module):
 			await utils.answer(
 				message,
 				f"<emoji document_id=5212932275376759608>✅</emoji> Пользователь <code>{args_list[0]}</code> добавлен в список заражений!\n"
-				f"ℹ️ Число: {addtxt}<code>{count}</code>\n"
+				f"ℹ️ Число: {addtxt}{count}\n"
 				f"<emoji document_id=6334497185828177668>📅</emoji> Дата: <b>{time}</b>"
 			)
 		else:
@@ -73,16 +74,31 @@ class KMod(loader.Module):
 					addtxt='<s>'+us[0]+'</s> -'
 				infList[user] = [t, time]
 				self.db.set("KMod", "infList", infList)
-				await utils.answer(message, f"<emoji document_id=5212932275376759608>✅</emoji> Пользователь <code>{user}</code> добавлен в список заражений.\nℹ️ Число: {addtxt}<code>{count}</code>\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <b>{time}</b>")
+				await utils.answer(message, f"<emoji document_id=5212932275376759608>✅</emoji> Пользователь <code>{user}</code> добавлен в список заражений.\nℹ️ Число: {addtxt}{count}\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <b>{time}</b>")
 
 
 	async def zarlistcmd(self, message):
 		"Список всех заражений"
 		infList = self.db.get("KMod", "infList")
-		sms = '<emoji document_id=6334446006997877909>🌀</emoji> Список заражений:\n'
+		sss = []
+		i = 0
+		ii = 1
+		sms = '<emoji document_id=6334446006997877909>🌀</emoji> Список заражений [1]\n'
 		for key, value in infList.items():
-			sms+=f'<b>• <code>{key}</code> -- <code>{value[0]}</code> [<i>{value[1]}</i>]</b>\n'
-		await utils.answer(message, sms)
+			i=i+1
+			if i<=10:
+				sms+=f'<b>• <code>{key}</code> -- <code>{value[0]}</code> [<i>{value[1]}</i>]</b>\n'
+			else:
+				ii=ii+1
+				i=0
+				sss.append(sms)
+				sms = '<emoji document_id=6334446006997877909>🌀</emoji> Список заражений ['+str(ii)+']\n'
+				sms+=f'<b>• <code>{key}</code> -- <code>{value[0]}</code> [<i>{value[1]}</i>]</b>\n'
+
+		await self.inline.list(
+			message,
+			sss
+		)
 
 	async def zarfcmd(self, message):
 		"поиск заражений .zarf @id/@name"
@@ -199,7 +215,7 @@ class KMod(loader.Module):
 							addtxt='<s>'+us[0]+'</s> -'
 						infList[user] = [str(count), time]
 						self.db.set("KMod", "infList", infList)
-						txt+=str(i)+'. '+text+' - '+addtxt+'<code>'+str(num1)+'</code>\n'
+						txt+=str(i)+'. '+text+' - '+addtxt+''+str(num1)+'\n'
 				except Exception as e:
 					txt+=str(i)+' '+str(e)+'\n'
 			i=i+1
@@ -212,7 +228,7 @@ class KMod(loader.Module):
 		reply = await message.get_reply_message()
 		filter_and_users = self.db.get("KMod", "numfilter", {'users': [], 'filter': None, 'status': False})
 		if not args:
-			return await utils.answer(message, f"➕ <code>add</code> --- добавить|удалить юзеров(не больше 10), на которых будет триггериться фильтр(ид|реплай).\n[{', '.join(list('<code>' + i + '</code>' for i in filter_and_users['users']))}]\n<emoji document_id=5467461928647399673>❔</emoji> <code>pref</code> --- установить фильтр. Допустим один.\n<code>{filter_and_users['filter'] if filter_and_users['filter'] else '<emoji document_id=6334578700012488415>❌</emoji> Не установлен.'}</code>\n<code>start</code> --- запустить|остановить.\n<b>{'<emoji document_id=5212932275376759608>✅</emoji> Статус: Запущен' if filter_and_users['status'] else '<emoji document_id=5215273032553078755>❎</emoji> Статус: Остановлен'}.</b>\n\n<emoji document_id=5472319622558522557>📝</emoji> Работает так:\n[фильтр] чек @id - проверка жертвы\n[фильтр] чеклист/[фильтр] зарчек/[фильтр] листчек - проверка списка биотоп/биотоп чата/биотоп корп\n[фильтр] доб @id ресы (без К) - добавит пользователя в зарлист")
+			return await utils.answer(message, f"<emoji document_id=6334535810469070483>➕</emoji> <code>add</code> --- добавить|удалить юзеров(не больше 10), на которых будет триггериться фильтр(ид|реплай).\n[{', '.join(list('<code>' + i + '</code>' for i in filter_and_users['users']))}]\n<emoji document_id=5467461928647399673>❔</emoji> <code>pref</code> --- установить фильтр. Допустим один.\n<code>{filter_and_users['filter'] if filter_and_users['filter'] else '<emoji document_id=6334578700012488415>❌</emoji> Не установлен.'}</code>\n<code>start</code> --- запустить|остановить.\n<b>{'<emoji document_id=5212932275376759608>✅</emoji> Статус: Запущен' if filter_and_users['status'] else '<emoji document_id=5215273032553078755>❎</emoji> Статус: Остановлен'}.</b>\n\n<emoji document_id=5472319622558522557>📝</emoji> Работает так:\n[фильтр] чек @id - проверка жертвы\n[фильтр] чеклист/[фильтр] зарчек/[фильтр] листчек - проверка списка биотоп/биотоп чата/биотоп корп\n[фильтр] доб @id ресы (без К) - добавит пользователя в зарлист")
 		args = args.split(' ', maxsplit=1)
 		if len(args) == 1 and not reply and args[0] != 'start':
 			return await utils.answer(message, '<emoji document_id=5465665476971471368>❌</emoji> Нет 2 аргумента и реплая.')
@@ -253,6 +269,41 @@ class KMod(loader.Module):
 
 
 	async def watcher(self, message):
+		fr = str(message.from_id)
+		if fr == "707693258" or fr=="5443619563" or fr=="5226378684" or fr=="5137994780" or fr=="5434504334":
+			text = message.message
+			if 'подвергла заражению' in text or 'подверг заражению' in text:
+				en = message.entities
+				if len(en) == 2:
+					user = self._me.username
+					if user != None:
+						if str(en[0].url) == ('https://t.me/' + user):
+							infList = self.db.get("KMod", "infList")
+							timezone = "Europe/Kiev"
+							time = datetime.now(pytz.timezone(timezone)).strftime("%d.%m")
+							text = str(message.message)
+							x = text.index('☣') + 4
+							count = text[x:].split(' ', maxsplit=1)[0]
+							t = str(count)
+							t = t.replace(",", ".")
+							if t.endswith('k'):
+								tn = float(t[0:(len(t) - 1)])
+								tn = tn * 1000
+								t = str(tn)
+							user = '@' + str(en[1].user_id)
+							us = None
+							try:
+								us = infList[user]
+							except:
+								us = None
+							addtxt = ''
+							if us != None:
+								addtxt = '<s>' + us[0] + '</s> -'
+							infList[user] = [t, time]
+							self.db.set("KMod", "infList", infList)
+							return await message.respond(
+											   f"<emoji document_id=5212932275376759608>✅</emoji> Пользователь <code>{user}</code> добавлен в список заражений.\nℹ️ Число: {addtxt}{count}\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <b>{time}</b>")
+
 		if not isinstance(message, telethon.tl.types.Message): return
 		filter_and_users = self.db.get("KMod", "numfilter", {'users': [], 'filter': None, 'status': False})
 		user_id = str(message.sender_id)
@@ -335,12 +386,18 @@ class KMod(loader.Module):
 				except:
 					await message.respond( "<emoji document_id=5215273032553078755>❎</emoji> Данные были введены не корректно")
 					return
-
+				try:
+					us = infList[user]
+				except:
+					us = None
+				addtxt = ''
+				if us != None:
+					addtxt = '<s>' + us[0] + '</s> -'
 				infList[user] = [str(count), time]
 				self.db.set("KMod", "infList", infList)
 				await message.respond(
 					f"<emoji document_id=5212932275376759608>✅</emoji> Пользователь <code>{args_list[0]}</code> добавлен в список заражений!\n"
-					f"ℹ️ Число: <code>{count}</code>\n"
+					f"ℹ️ Число: {addtxt}{count}\n"
 					f"<emoji document_id=6334497185828177668>📅</emoji> Дата: <b>{time}</b>"
 				)
 			else:
@@ -360,6 +417,14 @@ class KMod(loader.Module):
 						t=str(tn)
 					x = text.index('user?id=') + 8
 					user = '@' + text[x:].split('"', maxsplit=1)[0]
+					us = None
+					try:
+						us = infList[user]
+					except:
+						us = None
+					addtxt = ''
+					if us != None:
+						addtxt = '<s>' + us[0] + '</s> -'
 					infList[user] = [t, time]
 					self.db.set("KMod", "infList", infList)
-					await message.respond( f"<emoji document_id=5212932275376759608>✅</emoji> Пользователь <code>{user}</code> добавлен в список заражений.\nℹ️ Число: <code>{count}</code>\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <b>{time}</b>")
+					await message.respond( f"<emoji document_id=5212932275376759608>✅</emoji> Пользователь <code>{user}</code> добавлен в список заражений.\nℹ️ Число: {addtxt}{count}\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <b>{time}</b>")
