@@ -23,7 +23,7 @@ class TxtMod(loader.Module):
         use_reply = True
         args = utils.get_args(message)
         logger.debug(args)
-        if message.is_reply:
+        if message.is_reply and len(args)==0:
             use_reply = False
         if len(args) == 0 and use_reply:
             await utils.answer(message, self.strings("need_txt", message))
