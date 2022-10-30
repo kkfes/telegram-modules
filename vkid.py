@@ -29,11 +29,12 @@ class VkidMod(loader.Module):
                 en = message.entities
                 for value in en:
                     try:
-                        if str(en[0].user_id) == str(self._me.id):
+                        if str(value.user_id) == str(self._me.id):
                             await message.respond("/vkid")
                             return self._client.send_read_acknowledge(
                                 message.peer_id,
                                 message,
                                 clear_mentions=True,
                             )
-                    except:
+                    except Exception as e:
+                        pass
