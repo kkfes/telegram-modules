@@ -27,18 +27,13 @@ class VkidMod(loader.Module):
             text = message.message
             if 'начало отпускать, пора вкинуться' in text:
                 en = message.entities
-                if len(en>1):
-                    if str(en[0].user_id)==str(self._me.id) or str(en[1].user_id)==str(self._me.id):
-                        await self._client.send_read_acknowledge(
-                            message.peer_id,
-                            message,
-                            clear_mentions=True,
-                        )
-                        await message.respond("/vkid")
-                elif str(en[0].user_id)==str(self._me.id):
-                    await message.respond("/vkid")
-                    await self._client.send_read_acknowledge(
-                        message.peer_id,
-                        message,
-                        clear_mentions=True,
-                    )
+                for value in en:
+                    try:
+                        if str(en[0].user_id) == str(self._me.id):
+                            await message.respond("/vkid")
+                            return self._client.send_read_acknowledge(
+                                message.peer_id,
+                                message,
+                                clear_mentions=True,
+                            )
+                    except:
