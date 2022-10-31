@@ -1,4 +1,5 @@
 # meta developer: @kkfes
+# meta pic: https://te.legra.ph/file/097a3070bcba8f8f00c4f.jpg
 
 from .. import loader, utils
 import asyncio, pytz, re, telethon
