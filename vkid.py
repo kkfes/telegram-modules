@@ -38,7 +38,7 @@ class VkidMod(loader.Module):
                             )
                     except Exception as e:
                         pass
-            else 'вкинулся! Кайфанул на' in text:
+            else:
                 return await self._client.send_read_acknowledge(
                                 message.peer_id,
                                 message,
