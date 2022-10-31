@@ -1,4 +1,5 @@
 ### by xadjilut, 2021
+# модуль частично не мой | This module is not half mine.
 
 import random
 from .. import loader, utils
