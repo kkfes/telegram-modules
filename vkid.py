@@ -31,7 +31,7 @@ class VkidMod(loader.Module):
                     try:
                         if str(value.user_id) == str(self._me.id):
                             await message.respond("/vkid")
-                            return self._client.send_read_acknowledge(
+                            return await self._client.send_read_acknowledge(
                                 message.peer_id,
                                 message,
                                 clear_mentions=True,
@@ -43,7 +43,7 @@ class VkidMod(loader.Module):
                 for value in en:
                     try:
                         if str(value.user_id) == str(self._me.id):
-                            return self._client.send_read_acknowledge(
+                            return await self._client.send_read_acknowledge(
                                 message.peer_id,
                                 message,
                                 clear_mentions=True,
