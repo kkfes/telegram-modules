@@ -1,4 +1,5 @@
 # meta developer: @trololo_1
+# модуль частично не мой | This module is not half mine.
 
 from .. import loader, utils
 import asyncio, pytz, re, telethon
