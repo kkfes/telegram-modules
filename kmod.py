@@ -154,7 +154,9 @@ class KMod(loader.Module):
 						tn=tn*1000
 						t=str(tn)
 					num1 = float(t)/10
-					if num1 > num:
+					if text=='@'+str(self._me.id):
+						txt+=str(i)+'. Это ты <emoji document_id=5215541072872086569>🙈</emoji> с тебя <code>'+str((num1-num))+'</code>\n'
+					elif num1 > num:
 						nnnn = num1-num
 						if nnnn <= 20:
 							txt+=str(i)+'. '+text+' - <emoji document_id=6334846486928426691>➖</emoji> <code>'+str((num1-num))+'</code>\n'
@@ -163,7 +165,20 @@ class KMod(loader.Module):
 					else:
 						txt+=str(i)+'. '+text+' - <emoji document_id=5465665476971471368>❌</emoji> <code>'+str((num1-num))+'</code>\n'
 				else:
-					txt+=str(i)+'. Нет информаций <emoji document_id=5370781385885751708>😔</emoji>\n'
+					idx1 = messag[i].index("|")
+					idx2 = messag[i].rindex("|")
+					give = messag[i][idx1+1:idx2-6]
+					t = str(give)
+					t = t.replace(",", "." )
+					while "|" in t:
+						t=t[t.index("|")+1:(len(t)-1)]
+					num1 = 0
+					if t.endswith('k'):
+						tn = float(t[0:(len(t)-1)])
+						tn=tn*1000
+						t=str(tn)
+					num1 = float(t)/10
+					txt+=str(i)+'. '+text+' - <emoji document_id=6327931937474217403>🤷‍♀️</emoji> '+str(num1)+'\n'
 			except Exception as e:
 				txt+=str(i)+' '+str(e)+'\n'
 			i=i+1
