@@ -38,15 +38,9 @@ class VkidMod(loader.Module):
                             )
                     except Exception as e:
                         pass
-            elif 'вкинулся! Кайфанул на'in text:
-                en = message.entities
-                for value in en:
-                    try:
-                        if str(value.user_id) == str(self._me.id):
-                            return await self._client.send_read_acknowledge(
+            else 'вкинулся! Кайфанул на' in text:
+                return await self._client.send_read_acknowledge(
                                 message.peer_id,
                                 message,
                                 clear_mentions=True,
                             )
-                    except Exception as e:
-                        pass
