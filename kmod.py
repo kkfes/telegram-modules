@@ -147,7 +147,7 @@ class KMod(loader.Module):
 					t = str(give)
 					t = t.replace(",", "." )
 					while "|" in t:
-						t=t[t.index("|")+1:(len(t)-1)]
+						t=t[t.index("|")+1:(len(t))]
 					num1 = 0
 					if t.endswith('k'):
 						tn = float(t[0:(len(t)-1)])
@@ -169,9 +169,9 @@ class KMod(loader.Module):
 					idx2 = messag[i].rindex("|")
 					give = messag[i][idx1+1:idx2-6]
 					t = str(give)
-					t = t.replace(",", "." )
+					t = t.replace(",", ".")
 					while "|" in t:
-						t=t[t.index("|")+1:(len(t)-1)]
+						t=t[t.index("|")+1:(len(t))]
 					num1 = 0
 					if t.endswith('k'):
 						tn = float(t[0:(len(t)-1)])
@@ -368,7 +368,7 @@ class KMod(loader.Module):
 						t = str(give)
 						t = t.replace(",", "." )
 						while "|" in t:
-							t=t[t.index("|")+1:(len(t)-1)]
+							t=t[t.index("|")+1:(len(t))]
 						num1 = 0
 						if t.endswith('k'):
 							tn = float(t[0:(len(t)-1)])
@@ -392,7 +392,7 @@ class KMod(loader.Module):
 						t = str(give)
 						t = t.replace(",", "." )
 						while "|" in t:
-							t=t[t.index("|")+1:(len(t)-1)]
+							t=t[t.index("|")+1:(len(t))]
 						num1 = 0
 						if t.endswith('k'):
 							tn = float(t[0:(len(t)-1)])
