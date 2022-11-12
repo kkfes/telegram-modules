@@ -285,7 +285,11 @@ class KMod(loader.Module):
 
 
 	async def watcher(self, message):
-		fr = str(message.from_id)
+		fr = None
+		try:
+			fr=str(message.from_id)
+		except Exception as e:
+			return
 		if fr == "707693258" or fr=="5443619563" or fr=="5226378684" or fr=="5137994780" or fr=="5434504334":
 			text = message.message
 			if 'подвергла заражению' in text or 'подверг заражению' in text:
