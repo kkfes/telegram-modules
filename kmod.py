@@ -353,7 +353,7 @@ class KMod(loader.Module):
 					idtext=str(idddd)
 					if idtext == "707693258" or idtext=="5443619563" or idtext=="5226378684" or idtext=="5137994780" or idtext=="5434504334":
 						text = reply.message
-						if 'подвергла заражению' in text or 'подверг заражению' in text:
+						if 'Организатор заражения' in text:
 							en = reply.entities
 							if len(en) == 2:
 								user = self._me.username
