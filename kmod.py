@@ -340,18 +340,33 @@ class KMod(loader.Module):
 		key=key.strip()
 		text=text.replace(key,'')
 		text=text.strip()
-		if key=='чек':
+		if key=='чек' or key=='ф' or key=='з':
 			if "@" in text:
 				infList = self.db.get("KMod", "infList")
+				reply = await message.get_reply_message()
+				idddd = -1
 				try:
-					idd = text[text.index("@"):len(text)]
-					user = infList[text[text.index("@"):len(text)]]
-					await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{idd}</code>:\n☣️ {user[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{user[1]}</i></b>")
-				except:
-					await message.respond("<emoji document_id=5215273032553078755>❎</emoji> Данного пользователя нет в списке.")
+				 	idddd = reply.from_id
+				except Exception as e:
+					idddd = -1
+
+				if idddd>0:
+					try:
+						idd = idddd
+						user = infList['@'+str(idddd)]
+						await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{idd}</code>:\n☣️ {user[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{user[1]}</i></b>")
+					except:
+						await message.respond("<emoji document_id=5215273032553078755>❎</emoji> Данного пользователя нет в списке.")
+				else:
+					try:
+						idd = text[text.index("@"):len(text)]
+						user = infList[text[text.index("@"):len(text)]]
+						await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{idd}</code>:\n☣️ {user[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{user[1]}</i></b>")
+					except:
+						await message.respond("<emoji document_id=5215273032553078755>❎</emoji> Данного пользователя нет в списке.")
 			else:
 				await message.respond("<emoji document_id=5215273032553078755>❎</emoji> Укажите ид вместе с @")
-		elif key=='листчек' or key=='зарчек' or key=='чеклист':
+		elif key=='листчек' or key=='зарчек' or key=='чеклист'  or key=='зл':
 			infList = self.db.get("KMod", "infList")
 			reply = await message.get_reply_message()
 			txt = '<b><emoji document_id=6327738732665374492>🚨</emoji> Вот все провереные жертвы:</b>\n'
