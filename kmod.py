@@ -350,12 +350,27 @@ class KMod(loader.Module):
 				idddd = -1
 			if "@" in text or idddd>0:
 				if idddd>0:
-					try:
-						idd = idddd
-						user = infList['@'+str(idddd)]
-						await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{idd}</code>:\n☣️ {user[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{user[1]}</i></b>")
-					except:
-						await message.respond("<emoji document_id=5215273032553078755>❎</emoji> Данного пользователя нет в списке.")
+					idtext=str(idddd)
+					if idtext == "707693258" or idtext=="5443619563" or idtext=="5226378684" or idtext=="5137994780" or idtext=="5434504334":
+						text = message.message
+			if 'подвергла заражению' in text or 'подверг заражению' in text:
+				en = message.entities
+				if len(en) == 2:
+					user = self._me.username
+					if user != None:
+						if str(en[0].url) == ('https://t.me/' + user):
+							infList = self.db.get("KMod", "infList")
+							text = str(message.message)
+							user = '@' + str(en[1].user_id)
+							user1 = infList[user]
+							await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{user}</code>:\n☣️ {user1[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{user1[1]}</i></b>")
+					else:
+						try:
+							idd = idddd
+							user = infList['@'+str(idddd)]
+							await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{idd}</code>:\n☣️ {user[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{user[1]}</i></b>")
+						except:
+							await message.respond("<emoji document_id=5215273032553078755>❎</emoji> Данного пользователя нет в списке.")
 				else:
 					try:
 						idd = text[text.index("@"):len(text)]
