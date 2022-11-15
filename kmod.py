@@ -360,9 +360,9 @@ class KMod(loader.Module):
 								if user != None:
 									if str(en[0].url) == ('https://t.me/' + user):
 										infList = self.db.get("KMod", "infList")
-										text = str(reply.message)
-										user = '@' + str(en[1].user_id)
-										user1 = infList[user]
+										x = text.index('user?id=') + 8
+										user = '@' + text[x:].split('"', maxsplit=1)[0]
+										us = None
 										await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{user}</code>:\n☣️ {user1[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{user1[1]}</i></b>")
 					else:
 						try:
