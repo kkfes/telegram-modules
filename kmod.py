@@ -341,15 +341,14 @@ class KMod(loader.Module):
 		text=text.replace(key,'')
 		text=text.strip()
 		if key=='чек' or key=='ф' or key=='з':
-			if "@" in text:
-				infList = self.db.get("KMod", "infList")
-				reply = await message.get_reply_message()
+			infList = self.db.get("KMod", "infList")
+			reply = await message.get_reply_message()
+			idddd = -1
+			try:
+			 	idddd = reply.from_id
+			except Exception as e:
 				idddd = -1
-				try:
-				 	idddd = reply.from_id
-				except Exception as e:
-					idddd = -1
-
+			if "@" in text or idddd>0:
 				if idddd>0:
 					try:
 						idd = idddd
