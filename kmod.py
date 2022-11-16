@@ -352,11 +352,7 @@ class KMod(loader.Module):
 				if idddd>0:
 					idtext=str(idddd)
 					if idtext == "707693258" or idtext=="5443619563" or idtext=="5226378684" or idtext=="5137994780" or idtext=="5434504334":
-						text = reply.message
-						x = text.index('user?id=') + 8
-						user = '@' + text[x:].split('"', maxsplit=1)[0]
-						us = infList[user]
-						await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{user}</code>:\n☣️ {us[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{us[1]}</i></b>")
+						await message.respond("<i><b><emoji document_id=5766866362299321344>😔</emoji> Опознавание жертв по службе безопасности еще в разработке.</b></i>")
 					else:
 						try:
 							idd = idddd
