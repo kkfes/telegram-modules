@@ -353,12 +353,11 @@ class KMod(loader.Module):
 					idtext=str(idddd)
 					if idtext == "707693258" or idtext=="5443619563" or idtext=="5226378684" or idtext=="5137994780" or idtext=="5434504334":
 						text = reply.message
-						if 'Организатор заражения' in text:
-							infList = self.db.get("KMod", "infList")
-							x = text.index('user?id=') + 8
-							user = '@' + text[x:].split('"', maxsplit=1)[0]
-							us = None
-							await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{user}</code>:\n☣️ {user1[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{user1[1]}</i></b>")
+						x = text.index('user?id=') + 8
+						user = '@' + text[x:].split('"', maxsplit=1)[0]
+						us = infList[user]
+						await message.respond(f"<b><emoji document_id=5212932275376759608>✅</emoji> Жертва <code>{user}</code>:\n☣️ {us[0]} био-опыта.\n<emoji document_id=6334497185828177668>📅</emoji> Дата: <i>{us[1]}</i></b>")
+					else:
 						try:
 							idd = idddd
 							user = infList['@'+str(idddd)]
