@@ -352,7 +352,8 @@ class KMod(loader.Module):
 				if idddd>0:
 					idtext=str(idddd)
 					if idtext == "707693258" or idtext=="5443619563" or idtext=="5226378684" or idtext=="5137994780" or idtext=="5434504334":
-						await message.respond("<i><b><emoji document_id=5766866362299321344>😔</emoji> Опознавание жертв по службе безопасности еще в разработке.</b></i>")
+						if 'Организатор заражения' in reply.message:
+							await message.respond("<i><b><emoji document_id=5766866362299321344>😔</emoji> Опознавание жертв по службе безопасности еще в разработке.</b></i>")
 					else:
 						try:
 							idd = idddd
