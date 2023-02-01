@@ -258,7 +258,7 @@ class NumMod(loader.Module):
 		if not filter_and_users['filter'] or not filter_and_users['status'] or user_id not in filter_and_users['users'] or message.is_private: return
 		text = message.raw_text.lower()
 		if not text.startswith(filter_and_users['filter']): return
-		send_mes = re.search(r"(?P<z>бей\s|зарази[ть]{,2}\s)(?P<lvl>[1-9]?[0]?\s)?(?P<link>@[0-9a-z_]+|(?:https?://)?t\.me/[0-9a-z_]+|tg://openmessage\?user_id=(?P<id>[0-9]+))", text)
+		send_mes = re.search(r"(?P<z>бей\s|зарази[ть]{,2}\s|еб)(?P<lvl>[1-9]?[0]?\s)?(?P<link>@[0-9a-z_]+|(?:https?://)?t\.me/[0-9a-z_]+|tg://openmessage\?user_id=(?P<id>[0-9]+))", text)
 		if send_mes:
 			send_mes = send_mes.groupdict()
 			send_mes['link'], send_mes['id'] = '@'+send_mes['id'] if send_mes['id'] else send_mes['link'], ''
